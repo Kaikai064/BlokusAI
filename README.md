@@ -49,8 +49,7 @@ Open `notebooks/train_colab.ipynb` in Colab (GPU runtime). It mounts Drive,
 runs the test suite, enables the Numba fast path, and trains with **automatic
 resume** — if the session drops, just re-run the training cell.
 
-After pushing this repo to GitHub, add an Open-in-Colab badge:
-`https://colab.research.google.com/github/<you>/<repo>/blob/main/notebooks/train_colab.ipynb`
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Kaikai064/BlokusAI/blob/main/notebooks/train_colab.ipynb)
 
 Training saves checkpoints to Drive. Point the GUI at the latest one via the
 `BLOKUS_WEIGHTS` environment variable (or copy it to `models/blokus_net.pt`).
