@@ -88,12 +88,23 @@ def run(cfg, resume: bool = True, log=print):
 
     for it in range(start, cfg.num_iters):
         t0 = time.perf_counter()
-        ev = NetEvaluator(net, device)
         n_samples = 0
-        for _ in range(cfg.games_per_iter):
-            samples, _ = play_game(ev, cfg, rng)
-            buffer.extend(samples)
-            n_samples += len(samples)
+        if cfg.batched_selfplay:
+            from .batched_selfplay import NetBatchEvaluator, generate_games
+            bev = NetBatchEvaluator(net, device)
+            remaining = cfg.games_per_iter
+            while remaining > 0:
+                b = min(cfg.selfplay_batch, remaining)
+                samples = generate_games(bev, cfg, rng, b)
+                buffer.extend(samples)
+                n_samples += len(samples)
+                remaining -= b
+        else:
+            ev = NetEvaluator(net, device)
+            for _ in range(cfg.games_per_iter):
+                samples, _ = play_game(ev, cfg, rng)
+                buffer.extend(samples)
+                n_samples += len(samples)
 
         losses = []
         if len(buffer) >= cfg.min_buffer:

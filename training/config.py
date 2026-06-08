@@ -28,6 +28,8 @@ class Config:
     temp_moves: int = 14          # sample for the first N plies, then play argmax
     games_per_iter: int = 50
     max_plies: int = 120
+    selfplay_batch: int = 32       # games run concurrently for batched NN eval
+    batched_selfplay: bool = True
     # --- training ---
     batch_size: int = 256
     train_steps_per_iter: int = 400
@@ -53,7 +55,7 @@ def smoke_config(ckpt_dir: str) -> Config:
     """Tiny configuration for a fast local pipeline smoke test."""
     return Config(
         channels=16, blocks=2,
-        n_sims=6, games_per_iter=2, temp_moves=6,
+        n_sims=6, games_per_iter=2, temp_moves=6, selfplay_batch=2,
         batch_size=32, train_steps_per_iter=20,
         buffer_size=5_000, min_buffer=16,
         num_iters=1, device="cpu", ckpt_dir=ckpt_dir,
