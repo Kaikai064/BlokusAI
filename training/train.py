@@ -23,23 +23,29 @@ def state_from_snapshot(snap) -> State:
 
 
 def make_batch(samples, device):
-    """List of replay samples -> (planes, pi_target, z_target) on ``device``."""
+    """List of replay samples -> (planes, pi_target, z_target, legal_mask)."""
     n = len(samples)
     planes = np.stack([encode_state(state_from_snapshot(s[0])) for s in samples])
     pi = np.zeros((n, ACTION_SPACE), dtype=np.float32)
+    legal_mask = np.zeros((n, ACTION_SPACE), dtype=bool)
     z = np.empty(n, dtype=np.float32)
     for i, (_snap, acts, probs, zz) in enumerate(samples):
         pi[i, acts] = probs
+        legal_mask[i, acts] = True
         z[i] = zz
     return (torch.from_numpy(planes).to(device),
             torch.from_numpy(pi).to(device),
-            torch.from_numpy(z).to(device))
+            torch.from_numpy(z).to(device),
+            torch.from_numpy(legal_mask).to(device))
 
 
 def train_step(net, optimizer, batch, value_weight: float = 1.0):
-    planes, pi_target, z_target = batch
+    planes, pi_target, z_target, legal_mask = batch
     net.train()
     logits, v = net(planes)
+    # Train the policy only over legal moves: with ~200 legal of 17,836 actions,
+    # masking stops the net from wasting capacity suppressing illegal logits.
+    logits = logits.masked_fill(~legal_mask, -1e9)
     logp = F.log_softmax(logits, dim=1)
     policy_loss = -(pi_target * logp).sum(dim=1).mean()
     value_loss = F.mse_loss(v, z_target)

@@ -55,6 +55,7 @@ def load_checkpoint(cfg, net, opt, buffer, rng) -> int:
         bp = os.path.join(cfg.ckpt_dir, man["buffer"])
         if os.path.exists(bp):
             buffer.load(bp)
+    buffer.recap(cfg.buffer_size)   # drop stale data if buffer_size was lowered
     return ck["iteration"]
 
 

@@ -37,6 +37,14 @@ class ReplayBuffer:
     def __len__(self) -> int:
         return len(self.data)
 
+    def recap(self, new_capacity: int) -> None:
+        """Resize capacity, keeping the most recent samples. Used on resume to
+        drop stale early data when ``buffer_size`` is lowered."""
+        self.capacity = new_capacity
+        if len(self.data) > new_capacity:
+            self.data = self.data[-new_capacity:]
+        self.pos = 0
+
     def save(self, path: str) -> None:
         tmp = path + ".tmp"
         with open(tmp, "wb") as f:

@@ -37,7 +37,7 @@ class Config:
     weight_decay: float = 1e-4
     value_loss_weight: float = 1.0
     # --- replay buffer ---
-    buffer_size: int = 200_000
+    buffer_size: int = 50_000     # keep recent data fresh (old self-play is weak)
     min_buffer: int = 2_000       # don't train until the buffer has this many
     # --- loop / checkpointing ---
     num_iters: int = 100
@@ -47,7 +47,7 @@ class Config:
     save_buffer: bool = True
     # --- evaluation ---
     eval_every: int = 5           # 0 disables periodic eval vs baselines
-    eval_games: int = 20
+    eval_games: int = 40          # paired games per baseline (less noisy)
     eval_sims: int = 128
 
 
