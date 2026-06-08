@@ -1,0 +1,17 @@
+# --- Engine core (required to run the pure-Python engine + tests) ---
+numpy>=1.23
+
+# --- Move-gen acceleration (training throughput; optional locally) ---
+numba>=0.58
+
+# --- Neural network / training ---
+torch>=2.0
+tqdm>=4.0
+matplotlib>=3.6
+
+# --- GUI ---
+gradio>=4.0
+pillow>=9.0
+
+# --- Dev ---
+pytest>=7.0

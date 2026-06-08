@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+build/
+dist/
+
+# Models & training artifacts (ship weights via Releases / HF Hub, not git)
+*.pt
+*.pth
+*.onnx
+checkpoints/
+runs/
+wandb/
+data/
+*.npz
+*.npy
+
+# OS
+.DS_Store
+
+# Local tooling
+.claude/
