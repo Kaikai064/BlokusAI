@@ -97,3 +97,10 @@ def test_variants_are_normalized_and_unique_within_piece():
             assert min(c for _, c in shape) == 0
             assert shape not in seen                   # unique orientation
             seen.add(shape)
+
+
+def test_orientation_transition_maps():
+    from blokus_core.pieces import ROT_OF, FLIP_OF, NUM_VARIANTS
+    for v in range(NUM_VARIANTS):
+        assert ROT_OF[ROT_OF[ROT_OF[ROT_OF[v]]]] == v   # 4 rotations = identity
+        assert FLIP_OF[FLIP_OF[v]] == v                 # 2 flips = identity

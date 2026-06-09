@@ -50,3 +50,11 @@ def test_ai_move_advances_state():
     a, ns = game_io.ai_move(s, ev, n_sims=8, rng=random.Random(0))
     assert ns.num_moves == 1
     assert a in board.legal_actions(s)
+
+
+def test_render_play_and_piece_thumbnail():
+    from blokus_core.pieces import VARIANTS
+    img = render.render_play(State.initial(), 20, legal_refs=[60, 75])
+    assert img.shape == (14 * 20, 14 * 20, 3) and img.dtype == np.uint8
+    thumb = render.render_piece(VARIANTS[0])      # monomino thumbnail
+    assert thumb.ndim == 3 and thumb.shape[2] == 3

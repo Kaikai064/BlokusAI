@@ -136,6 +136,11 @@ ACTION_SPACE = NUM_VARIANTS * NUM_CELLS    # 17836
 # Per-variant bounding box extents (max row/col offset), handy for move-gen.
 VARIANT_MAX = tuple((max(r for r, _ in v), max(c for _, c in v)) for v in VARIANTS)
 
+# Orientation transition maps for UI rotate/flip buttons: variant -> variant.
+_KEY_TO_VARIANT = {v: i for i, v in enumerate(VARIANTS)}
+ROT_OF = tuple(_KEY_TO_VARIANT[normalize(_rotate90(v))] for v in VARIANTS)
+FLIP_OF = tuple(_KEY_TO_VARIANT[normalize(_reflect(v))] for v in VARIANTS)
+
 
 # --- Action <-> placement conversions ----------------------------------------
 def decode_action(action_id: int) -> Tuple[int, int]:
