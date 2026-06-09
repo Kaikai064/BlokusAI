@@ -21,7 +21,7 @@ import gradio as gr
 from blokus_core import board
 from blokus_core.board import State
 from blokus_core.pieces import (
-    PIECE_NAMES, PIECE_VARIANTS, VARIANTS, NUM_PIECES, ROT_OF, FLIP_OF, decode,
+    PIECE_NAMES, PIECE_VARIANTS, VARIANTS, NUM_PIECES, ROT_OF, FLIP_OF, decode_action,
 )
 from . import render, game_io
 
@@ -42,7 +42,7 @@ def _remaining(s):
 def _legal_refs(s, variant):
     if variant is None or s.current != HUMAN:
         return []
-    return [rc for a in board.legal_actions(s) for (v, rc) in [decode(a)] if v == variant]
+    return [rc for a in board.legal_actions(s) for (v, rc) in [decode_action(a)] if v == variant]
 
 
 def _gallery(s):

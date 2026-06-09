@@ -58,3 +58,14 @@ def test_render_play_and_piece_thumbnail():
     assert img.shape == (14 * 20, 14 * 20, 3) and img.dtype == np.uint8
     thumb = render.render_piece(VARIANTS[0])      # monomino thumbnail
     assert thumb.ndim == 3 and thumb.shape[2] == 3
+
+
+def test_app_module_imports():
+    """Guard against bad imports in gui/app.py (gradio is stubbed since it isn't
+    installed in CI). This would have caught the decode/decode_action slip."""
+    import sys
+    import types
+    import importlib
+    sys.modules.setdefault("gradio", types.ModuleType("gradio"))
+    app = importlib.import_module("gui.app")
+    assert callable(app.build_app)
