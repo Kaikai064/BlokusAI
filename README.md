@@ -9,6 +9,16 @@ self-play. Comes with a web GUI so you — and your friends — can play against
 > run on Colab** that climbs the strength ladder, and deploying the GUI. The code
 > runs end-to-end today; the bundled model just isn't strong until trained.
 
+## ▶ Play in your browser
+
+**https://kaikai064.github.io/BlokusAI/** — a zero-install web version (in `docs/`).
+Pick a piece, Rotate/Flip it, and the green dots show every legal placement; hover
+to preview, click to place. The browser build currently uses a fast built-in
+heuristic opponent; the neural-net engine (below) plays much stronger with enough
+MCTS simulations.
+
+> Enable it once under **Settings → Pages → Deploy from a branch → `main` / `/docs`**.
+
 ## Quickstart
 
 ```bash

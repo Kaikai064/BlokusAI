@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blokus Duo · play the AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site">
+    <h1>Blokus Duo <span>· play the AI</span></h1>
+    <div class="controls">
+      <label>Difficulty
+        <select id="level">
+          <option value="0">Easy (random)</option>
+          <option value="1">Medium (greedy)</option>
+          <option value="2" selected>Hard (blocking)</option>
+        </select>
+      </label>
+      <button id="newgame" class="primary">New game</button>
+    </div>
+  </header>
+
+  <div class="app">
+    <aside id="leftPanel" class="player"></aside>
+
+    <main class="center">
+      <div class="topbar">
+        <div class="tools">
+          <button id="rotate" title="Rotate the selected piece 90°">⟳ Rotate</button>
+          <button id="flip" title="Mirror the selected piece">⇄ Flip</button>
+          <button id="skip" title="Deselect the current piece">Skip</button>
+          <button id="pass" title="Pass (only when you have no legal move)">Pass</button>
+        </div>
+        <div id="turn" class="turn"></div>
+        <div id="legalCount" class="legal-count"></div>
+      </div>
+      <canvas id="board"></canvas>
+      <div id="status" class="status"></div>
+    </main>
+
+    <aside id="rightPanel" class="player"></aside>
+  </div>
+
+  <footer class="site-foot">
+    You are <b>Black</b> (start cell 4,4) and move first · the AI is <b>White</b> (start 9,9).
+    Pick a piece, <b>Rotate/Flip</b>, then click a green-dotted cell.
+    &nbsp;·&nbsp; <a href="https://github.com/Kaikai064/BlokusAI">Source &amp; the neural-net engine</a>
+  </footer>
+
+  <script type="module" src="ui.js"></script>
+</body>
+</html>
