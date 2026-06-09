@@ -136,8 +136,8 @@ def build_app():
             with gr.Column(scale=2):
                 piece = gr.Dropdown(label="Piece", choices=[])
                 orient = gr.Dropdown(label="Orientation", choices=[])
-                n_sims = gr.Slider(50, 800, value=200, step=50,
-                                   label="AI strength (MCTS simulations)")
+                n_sims = gr.Slider(50, 1200, value=300, step=50,
+                                   label="AI strength (MCTS simulations) — higher = stronger but slower")
                 with gr.Row():
                     pass_btn = gr.Button("Pass")
                     new_btn = gr.Button("New game", variant="primary")

@@ -61,8 +61,16 @@ def load_net(path: str, device: str = "cpu"):
     return net
 
 
-def make_evaluator(weights_path: Optional[str] = None, device: str = "cpu"):
-    """NetEvaluator from weights if given, else an untrained (weak) net."""
+def make_evaluator(weights_path: Optional[str] = None, device: Optional[str] = None):
+    """NetEvaluator from weights if given, else an untrained (weak) net.
+
+    Device defaults to $BLOKUS_DEVICE, else CUDA if available, else CPU -- so the
+    same app is fast on a GPU (Colab) and still works on CPU (HF Spaces free).
+    """
+    import os
+    import torch
     from blokus_core.net import BlokusNet, NetEvaluator
+    if device is None:
+        device = os.environ.get("BLOKUS_DEVICE") or ("cuda" if torch.cuda.is_available() else "cpu")
     net = load_net(weights_path, device) if weights_path else BlokusNet()
     return NetEvaluator(net, device)
